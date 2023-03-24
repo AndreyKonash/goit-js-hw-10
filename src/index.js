@@ -60,7 +60,7 @@ function onRenderCountriesList(countries) {
     return;
   }
 
-  if (numberCountriesFound > 10) {
+  if (numberCountriesFound < 10) {
     Notify.warning(
       'Too many matches found. Please enter a more specific name',
       {
