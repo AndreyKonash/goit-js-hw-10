@@ -34,14 +34,23 @@ function onSeachCountry(event) {
 function onRenderCountriesList(countries) {
   const numberCountriesFound = countries.length;
 
-  const markupCountriesList = countries
-    .map(
-      ({ name: { official }, flags: { svg } }) =>
-        `<li class="country"><img src="${svg}" alt=Flag of ${official}/><h1>${official}</h1></li>`
-    )
-    .join('');
+  if (numberCountriesFound > 10) {
+    Notify.info('Too many matches found. Please enter a more specific name', {
+      timeout: TIMEOUT_NOTIFICATION,
+    });
+  }
+  refs.infoAboutCountryEl.innerHTML = '';
 
-  refs.countriesListEL.innerHTML = markupCountriesList;
+  if (numberCountriesFound < 10) {
+    const markupCountriesList = countries
+      .map(
+        ({ name: { official }, flags: { svg } }) =>
+          `<li class="country"><img src="${svg}" alt=Flag of ${official}/><h1>${official}</h1></li>`
+      )
+      .join('');
+
+    refs.countriesListEL.innerHTML = markupCountriesList;
+  }
 
   if (numberCountriesFound === 1) {
     const renderBigCountry = document.querySelector('.country');
@@ -59,14 +68,4 @@ function onRenderCountriesList(countries) {
     refs.infoAboutCountryEl.innerHTML = markupInfoAboutCountry;
     return;
   }
-
-  if (numberCountriesFound < 10) {
-    Notify.warning(
-      'Too many matches found. Please enter a more specific name',
-      {
-        timeout: TIMEOUT_NOTIFICATION,
-      }
-    );
-  }
-  refs.infoAboutCountryEl.innerHTML = '';
 }
