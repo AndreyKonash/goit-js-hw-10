@@ -19,6 +19,8 @@ refs.inputEl.addEventListener(
 
 function onSeachCountry(event) {
   const valueInput = event.target.value.trim();
+  refs.countriesListEL.innerHTML = '';
+  refs.infoAboutCountryEl.innerHTML = '';
 
   fetchCountries(valueInput)
     .then(onRenderCountriesList)
@@ -26,8 +28,6 @@ function onSeachCountry(event) {
       Notify.failure('Oops, there is no country with that name', {
         timeout: TIMEOUT_NOTIFICATION,
       });
-      refs.countriesListEL.innerHTML = '';
-      refs.infoAboutCountryEl.innerHTML = '';
     });
 }
 
